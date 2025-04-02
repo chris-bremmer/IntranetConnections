@@ -1,0 +1,63 @@
+﻿@page "/weather"
+@inject HttpClient Http
+@using Models
+@using System.Text.Json
+@using System.Timers
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Summerland Weather</h1>
+
+<p>Station: <a href="https://www.google.com/maps/search/?api=1&query=@observation.latitude,@observation.longitude" target="_blank">@observation.station_name</a> (Elevation: @observation.elevation meters)</p>
+
+<p>
+	<strong>Temperature:</strong> @observed.air_temperature&deg;@observation.station_units.units_temp
+	<small>(feels like @observed.feels_like @observation.station_units.units_temp)</small><br />
+	The relative humidity is @observed.relative_humidity%
+</p>
+<p>
+	<strong>Precipitation:</strong> Today @observed.precip_accum_local_day.ToString("F2")@observation.station_units.units_precip, yesterday  @observed.precip_accum_local_yesterday.ToString("F2")@observation.station_units.units_precip
+</p>
+<p>
+	<strong>Wind:</strong> average @observed.wind_avg @observation.station_units.units_wind, gusting @observed.wind_lull - @observed.wind_gust @observation.station_units.units_wind
+</p>
+
+
+@code {
+	private Observation observation = new Observation();
+	private Ob observed = new Ob();
+	private Timer timer;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Refresh();
+		StartTimer();
+	}
+
+	private void StartTimer()
+	{
+		timer = new Timer(15000); // 15 seconds
+		timer.Elapsed += async (sender, e) => await TimerElapsed();
+		timer.AutoReset = true;
+		timer.Enabled = true;
+	}
+
+	private async Task TimerElapsed()
+	{
+		await InvokeAsync(async () =>
+		{
+			await Refresh();
+			StateHasChanged();
+		});
+	}
+
+	protected async Task Refresh()
+	{
+		Tempest tempest = new Tempest(Http);
+		observation = await tempest.GetObservationAsync();// = await Http.GetFromJsonAsync<Tempest>("https://api.weather.com/v3/wx/forecast/daily/5day?geocode=49.6,-119.7&format=json&units=m&language=en-US&apiKey=YOUR_API_KEY");
+		if (observation != null && observation.obs.Count > 0)
+		{
+			observed = observation.obs[0];
+		}
+	}
+}

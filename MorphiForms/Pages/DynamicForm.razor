@@ -1,0 +1,195 @@
+﻿@page "/morphiform"
+@using System.Text.Json
+@using MudBlazor
+@using MorphiForms.Models
+@using Blazored.LocalStorage
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject ILocalStorageService localStorage
+
+<h3>@FormTitle</h3>
+
+<MudForm @ref="form" Model="@formData" Tar>
+	@foreach (var field in formFields)
+	{
+		string requiredError = $"{field.label} is required";
+		@switch (field.typeEnum)
+		{
+			case MorphFormFieldType.Text:
+			case MorphFormFieldType.Email:
+				<MudTextField T="string"
+				RequiredError="@requiredError"
+				@bind-Value="formData[field.label].AsString"
+				Label="@field.label"
+				Required="@field.required" />
+				break;
+
+			case MorphFormFieldType.Date:
+				<MudDatePicker PickerVariant="PickerVariant.Dialog"
+				Color="Color.Dark"
+				Label="@field.label"
+				@bind-Date="formData[field.label].AsDate"
+				RequiredError="@requiredError"
+				Editable="true" />
+				break;
+
+			case MorphFormFieldType.Number:
+				<MudNumericField T="int"
+				@bind-Value="formData[field.label].AsInt"
+				RequiredError="@requiredError"
+				Label="@field.label"
+				Required="@field.required"
+				Min="@field.min"
+				Max="@field.max" />
+				break;
+
+			case MorphFormFieldType.Checkbox:
+				<MudCheckBox @bind-Value="formData[field.label].AsBool"
+				RequiredError="@requiredError"
+				Label="@field.label" />
+				break;
+
+			default:
+				<p>Unsupported field type: @field.type</p>
+				break;
+		}
+	}
+
+	<p><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => OnValidSubmit())">Submit</MudButton></p>
+
+	@if(showError){
+		<MudAlert Severity="Severity.Error" Style="margin-top: 20px;">
+			@errorMessage
+		</MudAlert>
+	}
+
+</MudForm>
+
+@code {
+	[Parameter]
+	[SupplyParameterFromQuery]
+	public string File { get; set; }
+
+	private MudForm form;
+	private string FormTitle = string.Empty;
+	private Dictionary<string, FormValue> formData = new();
+	private List<Models.MorphFormField> formFields = new();
+	private bool showError = false;
+	private string errorMessage = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			if (string.IsNullOrEmpty(File))
+			{
+				Navigation.NavigateTo("/forms");
+				return;
+			}
+
+			string path = $"sample-data/{File}";
+			var response = await Http.GetAsync(path);
+			if (response.IsSuccessStatusCode)
+			{
+				var json = await response.Content.ReadAsStringAsync();
+				var formConfig = JsonSerializer.Deserialize<Models.MorphForm>(json);
+				if (formConfig == null)
+				{
+					ShowErrorMessage("Failed to deserialize form configuration.", null);
+					return;
+				}
+				FormTitle = formConfig.title;
+				formFields = formConfig.fields;
+
+				foreach (var field in formFields)
+				{
+					// Ensure the key exists in formData before accessing it
+					if (!formData.ContainsKey(field.label))
+					{
+						// Initialize the field based on type
+						formData[field.label] = field.type.ToLower() switch
+						{
+							"text" or "email" => new FormValue(""),
+							"date" => new FormValue(DateTime.Today),
+							"number" => new FormValue(0),
+							"checkbox" => new FormValue(false),
+							_ => new FormValue(null)
+						};
+					}
+
+					// After ensuring it's initialized, set the values accordingly
+					switch (field.type.ToLower())
+					{
+						case "text":
+						case "email":
+							field.typeEnum = field.type == "email" ? MorphFormFieldType.Email : MorphFormFieldType.Text;
+							formData[field.label].AsString = "";  // Default value
+							break;
+						case "date":
+							field.typeEnum = MorphFormFieldType.Date;
+							formData[field.label].AsDate = DateTime.Today;
+							break;
+						case "number":
+							field.typeEnum = MorphFormFieldType.Number;
+							formData[field.label].AsInt = 0;
+							break;
+						case "checkbox":
+							field.typeEnum = MorphFormFieldType.Checkbox;
+							formData[field.label].AsBool = false;
+							break;
+						default:
+							ShowErrorMessage($"Unknown field type: {field.type}", null);
+							break;
+					}
+				}
+			}
+			else
+			{
+				ShowErrorMessage($"Error fetching JSON: {response.StatusCode}", null);
+			}
+
+		}
+		catch (Exception ex)
+		{
+			ShowErrorMessage($"Unexpected error: {ex.Message}",null);
+		}
+	}
+
+	private async Task OnValidSubmit()
+	{
+		if (form.IsValid)
+		{
+			var responseJson = JsonSerializer.Serialize(new Deserializer(formData));
+			await localStorage.SetItemAsync("formDataJson", responseJson);
+			Navigation.NavigateTo("/formresult");
+		}
+		else
+		{
+			ShowErrorMessage("Please fill in all required fields.", formFields);
+		}
+	}
+
+	private void OnValidated()
+	{
+		if (!form.IsValid)
+		{
+			ShowErrorMessage("Form contains validation errors. Please correct them and try again.",formFields);
+		}
+	}
+
+	private void ShowErrorMessage(string Message, List<Models.MorphFormField>? formFields)
+	{
+		showError = true;
+		errorMessage = Message;
+		if (formFields != null)
+		{
+			foreach (var field in formFields)
+			{
+				if (field.required && string.IsNullOrEmpty(formData[field.label].AsString))
+				{
+					errorMessage += $"\n<br />{field.label} is required.";
+				}
+			}
+		}
+	}
+}

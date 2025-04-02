@@ -1,0 +1,15 @@
+{
+  "title": "Event Registration",
+  "fields": [
+    { "type": "text", "label": "Full Name", "required": true },
+    { "type": "email", "label": "Email", "required": true },
+    { "type": "number", "label": "Contact Number", "required": true },
+    { "type": "date", "label": "Date of Birth", "required": false },
+    { "type": "dropdown", "label": "Event Type", "values": ["Webinar", "Workshop", "Networking Event"], "required": true },
+    { "type": "text", "label": "Company Name", "required": false },
+    { "type": "text", "label": "Job Title", "required": false },
+    { "type": "checkbox", "label": "Subscribe to Updates", "required": false },
+    { "type": "textarea", "label": "Special Requests", "required": false },
+    { "type": "radio", "label": "Preferred Language", "values": ["English", "French", "Spanish"], "required": true }
+  ]
+}

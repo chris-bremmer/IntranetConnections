@@ -1,0 +1,192 @@
+﻿@page "/about"
+<h3>About Me</h3>
+<div class="row">
+	<div class="col-sm-4">
+		<a href="mailto:chris@bremmer.ca">Chris Bremmer</a>
+		<br />
+		<a href="tel:2508095154">250.809.5154</a>
+		<br />
+		<a href="https://bremmer.ca" taget="_blank">Website / Resume</a><br />
+        <br />
+        <p>
+            The chances of someone reading this page?
+            Verging on zero would be my guess, but hey, kudos to you if you get here!
+        </p>
+        <p>
+            Careful if you hire me. I have an oddball sense of humor and I don't come cheap!
+        </p>
+	</div>
+	<div class="col-sm-8">
+		<center>Puppies for scale. Benny, Nugget, Russ<br />
+			<img id="logo" src="images/puppies.jpg" />
+		</center>
+    </div>
+</div>
+
+<h3>About the Project</h3>
+<p>Dynamic Form Generator</p>
+
+<h4>Project Objective:</h4>
+<p>
+    The objective of this project is to design and implement a dynamic web-based form generator
+    capable of rendering a form based on a JSON configuration. The application should handle the
+    following:
+</p>
+<ol>
+    <li>Render Forms: Dynamically generate and display a form defined by the provided JSON structure.</li>
+    <li>Data Collection: Collect user input values entered into the form fields.</li>
+    <li>Validation: Apply basic and custom validation rules to the input fields, such as required fields, email formatting, and number range checks.</li>
+    <li>Generate Response: Return the collected form data as a JSON object upon submission.</li>
+</ol>
+<p>
+    Note: Development time is estimated at 10±2 hours. Focus on features you find most critical,
+    ensuring a balance between functionality, simplicity, and code quality.
+</p>
+<p>
+    Perspective: This challenge represents a simplified version of a larger feature set in our product.
+    Future capabilities may include cross-field validations, WYSIWYG form design, triggers,
+    spreadsheet data integration, workflow automation, and more (not included in this challenge).
+</p>
+
+<h4>Technical Requirements:</h4>
+<p>Input Specification (Form JSON):</p>
+<p>Example JSON:</p>
+<ul>
+    <li>
+        Field Types:
+        <ul>
+            <li>text, email, number, checkbox, dropdown, etc.</li>
+        </ul>
+    </li>
+    <li>
+        Validation Rules:
+        <ul>
+            <li>required, email formatting, number min and max, etc.</li>
+        </ul>
+    </li>
+    <li>
+        Metadata:
+        <ul>
+            <li>Form title and field labels.</li>
+        </ul>
+    </li>
+</ul>
+
+<p>Output Specification (Response JSON):</p>
+<p>Example Response:</p>
+<pre>
+{
+    "title": "Sample Form",
+    "fields": [
+        { "type": "text", "label": "Name", "required": true },
+        { "type": "email", "label": "Email", "required": true },
+        { "type": "number", "label": "Age", "min": 18, "max": 100 },
+        { "type": "dropdown", "label": "Industry", "values": ["Tech", "Production", "Health"], "required": true },
+        { "type": "checkbox", "label": "Subscribe to Newsletter", "required": false }
+    ]
+}
+{
+    "Name": "John Doe",
+    "Email": "john.doe@example.com",
+    "Age": 25,
+    "Industry": "Technology",
+    "Subscribe to Newsletter": true
+}
+</pre>
+
+<h4>UI Expectations:</h4>
+<ul>
+    <li>Framework: Use Blazor WebAssembly for the front-end.</li>
+    <li>Styling/Components: Optionally utilize MudBlazor for enhanced design and user experience.</li>
+</ul>
+
+<h4>Development Constraints:</h4>
+<ol>
+    <li>No Database Integration: Handle data in-memory.</li>
+    <li>Modern Frameworks: Utilize .NET 8 for development.</li>
+    <li>Focus: Prioritize simplicity, maintainability, and code quality.</li>
+</ol>
+
+<h4>Encouraged Practices:</h4>
+<ul>
+    <li>Feel free to use AI and internet searches for assistance.</li>
+    <li>Write clean, modular, and high-quality code.</li>
+    <li>Use a simple and efficient approach for solution implementation.</li>
+</ul>
+
+<h4>Deliverables:</h4>
+<ol>
+    <li>
+        Functioning Application:
+        <ul>
+            <li>
+                A fully functional dynamic form generator with the following features:
+                <ul>
+                    <li>Form rendering from JSON configuration.</li>
+                    <li>Validation and error handling.</li>
+                    <li>JSON output generation.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        Git Repository:
+        <ul>
+            <li>Share a public GitHub repository link containing the complete solution.</li>
+        </ul>
+    </li>
+    <li>
+        Documentation:
+        <ul>
+            <li>
+                Include a README with:
+                <ul>
+                    <li>Steps to run the application.</li>
+                    <li>Design considerations and architecture decisions.</li>
+                    <li>Any assumptions made during development.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ol>
+
+<h4>Duration:</h4>
+<p>You have one week to complete this project.</p>
+
+<h4>Evaluation Metrics:</h4>
+<ol>
+    <li>
+        Problem Solving:
+        <ul>
+            <li>How effectively the candidate breaks down and solves the problem.</li>
+        </ul>
+    </li>
+    <li>
+        Code Quality:
+        <ul>
+            <li>Readability, structure, adherence to best practices, and simplicity.</li>
+        </ul>
+    </li>
+    <li>
+        Functionality:
+        <ul>
+            <li>Completeness and correctness of the implemented features.</li>
+        </ul>
+    </li>
+    <li>
+        Knowledge of Technology:
+        <ul>
+            <li>Understanding and application of .NET 8, Blazor, and optionally MudBlazor.</li>
+        </ul>
+    </li>
+    <li>
+        Optional Review Meeting:
+        <ul>
+            <li>Candidates may be invited to a review meeting to present and discuss their solution.</li>
+        </ul>
+    </li>
+</ol>
+
+@code {
+
+}

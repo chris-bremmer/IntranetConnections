@@ -1,0 +1,26 @@
+[
+  {
+    "DisplayText": "Basic Information",
+    "FileName": "BasicInformation.json"
+  },
+  {
+    "DisplayText": "Comprehensive Survey",
+    "FileName": "ComprehensiveSurvey.json"
+  },
+  {
+    "DisplayText": "Event Registration",
+    "FileName": "EventRegistration.json"
+  },
+  {
+    "DisplayText": "Feedback Form",
+    "FileName": "FeedbackForm.json"
+  },
+  {
+    "DisplayText": "Job Application (How Ironic)",
+    "FileName": "JobApplication.json"
+  },
+  {
+    "DisplayText": "Personal Goals",
+    "FileName": "PersonalGoals.json"
+  }
+]

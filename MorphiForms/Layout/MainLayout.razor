@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+@using MudBlazor
+@using MudBlazor.State
+@using MudBlazor.Components
+
+@* Required *@
+<MudThemeProvider />
+<MudPopoverProvider />
+
+@* Needed for dialogs *@
+<MudDialogProvider />
+
+@* Needed for snackbars *@
+<MudSnackbarProvider />
+<div class="page">
+	<div class="sidebar">
+		<NavMenu />
+	</div>
+
+	<main>
+		<div class="top-row px-4">
+			<NavLink href="about" class="nav-link">About</NavLink>
+		</div>
+
+		<article class="content px-4">
+			@Body
+		</article>
+	</main>
+</div>

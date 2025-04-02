@@ -1,0 +1,33 @@
+﻿@page "/formresult"
+@using Blazored.LocalStorage
+@using MudBlazor
+@using System.Text.Json
+@inject ILocalStorageService localStorage
+@inject NavigationManager Navigation
+
+<h3>Form Data JSON</h3>
+
+<MudPaper>
+    <MudTextField T="string" Value="@formattedJson" Lines="25" ReadOnly="true" FullWidth="true" />
+</MudPaper>
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoBack">Back</MudButton>
+
+@code {
+    private string formattedJson;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var json = await localStorage.GetItemAsync<string>("formDataJson");
+        if (!string.IsNullOrEmpty(json))
+        {
+            var jsonElement = JsonDocument.Parse(json).RootElement;
+            formattedJson = JsonSerializer.Serialize(jsonElement, new JsonSerializerOptions { WriteIndented = true });
+        }
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/forms");
+    }
+}
