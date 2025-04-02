@@ -18,35 +18,72 @@
 			case MorphFormFieldType.Text:
 			case MorphFormFieldType.Email:
 				<MudTextField T="string"
-				RequiredError="@requiredError"
-				@bind-Value="formData[field.label].AsString"
-				Label="@field.label"
-				Required="@field.required" />
+							  RequiredError="@requiredError"
+							  InputType="@(field.typeEnum == MorphFormFieldType.Email ? InputType.Email : InputType.Text)"
+							  @bind-Value="formData[field.label].AsString"
+							  Label="@field.label"
+							  Required="@field.required" />
+				break;
+
+			case MorphFormFieldType.TextArea:
+				<MudTextField T="string"
+							  RequiredError="@requiredError"
+							  @bind-Value="formData[field.label].AsString"
+							  Label="@field.label"
+							  Lines="5"
+							  Required="@field.required" />
 				break;
 
 			case MorphFormFieldType.Date:
 				<MudDatePicker PickerVariant="PickerVariant.Dialog"
-				Color="Color.Dark"
-				Label="@field.label"
-				@bind-Date="formData[field.label].AsDate"
-				RequiredError="@requiredError"
-				Editable="true" />
+							   Color="Color.Dark"
+							   Label="@field.label"
+							   @bind-Date="formData[field.label].AsDate"
+							   RequiredError="@requiredError"
+							   Editable="true" />
 				break;
 
 			case MorphFormFieldType.Number:
 				<MudNumericField T="int"
-				@bind-Value="formData[field.label].AsInt"
-				RequiredError="@requiredError"
-				Label="@field.label"
-				Required="@field.required"
-				Min="@field.min"
-				Max="@field.max" />
+								 @bind-Value="formData[field.label].AsInt"
+								 RequiredError="@requiredError"
+								 Label="@field.label"
+								 Required="@field.required"
+								 Min="@field.min"
+								 Max="@field.max" />
 				break;
 
 			case MorphFormFieldType.Checkbox:
 				<MudCheckBox @bind-Value="formData[field.label].AsBool"
-				RequiredError="@requiredError"
-				Label="@field.label" />
+							 RequiredError="@requiredError"
+							 Label="@field.label" />
+				break;
+
+			case MorphFormFieldType.Dropdown:
+				<MudSelect T="string"
+						   @bind-Value="formData[field.label].AsString"
+						   RequiredError="@requiredError"
+						   Label="@field.label"
+						   Required="@field.required">
+					@foreach (var option in field.values)
+					{
+						<MudSelectItem Value="@option">@option</MudSelectItem>
+					}
+				</MudSelect>
+				break;
+
+			case MorphFormFieldType.Radio:
+				<MudInputLabel>@field.label</MudInputLabel>
+				<MudRadioGroup T="string"
+						   @bind-Value="formData[field.label].AsString"
+						   RequiredError="@requiredError"
+						   Label="@field.label"
+						   Required="@field.required">
+					@foreach (var option in field.values)
+					{
+						<MudRadio Value="@option">@option</MudRadio>
+					}
+				</MudRadioGroup>
 				break;
 
 			default:
@@ -55,9 +92,13 @@
 		}
 	}
 
-	<p><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => OnValidSubmit())">Submit</MudButton></p>
+	<p>
+		<br />
+		<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => OnValidSubmit())">Submit</MudButton>
+	</p>
 
-	@if(showError){
+	@if (showError)
+	{
 		<MudAlert Severity="Severity.Error" Style="margin-top: 20px;">
 			@errorMessage
 		</MudAlert>
@@ -113,6 +154,8 @@
 							"date" => new FormValue(DateTime.Today),
 							"number" => new FormValue(0),
 							"checkbox" => new FormValue(false),
+							"dropdown" => new FormValue(""),
+							"textarea" => new FormValue(""),
 							_ => new FormValue(null)
 						};
 					}
@@ -123,7 +166,11 @@
 						case "text":
 						case "email":
 							field.typeEnum = field.type == "email" ? MorphFormFieldType.Email : MorphFormFieldType.Text;
-							formData[field.label].AsString = "";  // Default value
+							formData[field.label].AsString = string.Empty;
+							break;
+						case "textarea":
+							field.typeEnum = MorphFormFieldType.TextArea;
+							formData[field.label].AsString = string.Empty;
 							break;
 						case "date":
 							field.typeEnum = MorphFormFieldType.Date;
@@ -136,6 +183,14 @@
 						case "checkbox":
 							field.typeEnum = MorphFormFieldType.Checkbox;
 							formData[field.label].AsBool = false;
+							break;
+						case "dropdown":
+							field.typeEnum = MorphFormFieldType.Dropdown;
+							formData[field.label].AsString = string.Empty;
+							break;
+						case "radio":
+							field.typeEnum = MorphFormFieldType.Radio;
+							formData[field.label].AsString = string.Empty;
 							break;
 						default:
 							ShowErrorMessage($"Unknown field type: {field.type}", null);
@@ -151,7 +206,7 @@
 		}
 		catch (Exception ex)
 		{
-			ShowErrorMessage($"Unexpected error: {ex.Message}",null);
+			ShowErrorMessage($"Unexpected error: {ex.Message}", null);
 		}
 	}
 
@@ -173,7 +228,7 @@
 	{
 		if (!form.IsValid)
 		{
-			ShowErrorMessage("Form contains validation errors. Please correct them and try again.",formFields);
+			ShowErrorMessage("Form contains validation errors. Please correct them and try again.", formFields);
 		}
 	}
 

@@ -10,10 +10,12 @@
 	public enum MorphFormFieldType
 	{
 		Text,
+		TextArea,
 		Email,
 		Date,
 		Number,
 		Dropdown,
+		Radio,
 		Checkbox
 	}
 	public class MorphFormField

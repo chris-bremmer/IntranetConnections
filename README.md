@@ -13,12 +13,12 @@
 	- MudBlazor 8.3.0
 	- Blazored Local Storage 4.5.0
 4. Run the application.
+5. Preview at http://morphiforms.bremmer.ca/
 
 ### Design considerations and architecture decisions
 
-* The application is built using Blazor WebAssembly.
-* The application is built using MudBlazor components.
-* The application uses Blazored Local Storage to store the form data.
+* Built using Blazor WebAssembly with MudBlazor components.
+* Uses Blazored Local Storage to store the form data.
 * The application uses a JSON file to define the form structure.
 * The application uses a JSON file to define the validation rules.
 * Several test forms are defined for demonstration purposes.
@@ -37,3 +37,11 @@
 * **Date Handling:** Date fields are handled in the client's local time.
 
 Deployed to http://morphiforms.bremmer.ca/
+
+## Additional Notes
+
+This was enjoyable to build and I learned a lot about MudBlazor in the process, something I had never worked with before.
+While it is far from what I would call production ready, it is a good start. Learning MudBlazor slowed me down some, but I wanted
+to stick within the time constraints. 
+I would have liked to have added more validation rules and tested out more forms and edge cases. As it stands, I think this is a 
+reasonable example of code.

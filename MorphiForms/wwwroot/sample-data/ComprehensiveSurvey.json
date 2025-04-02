@@ -11,7 +11,7 @@
     { "type": "number", "label": "Household Income ($)", "required": true },
     { "type": "checkbox", "label": "Agree to Share Data", "required": true },
     { "type": "dropdown", "label": "Preferred Contact Method", "values": ["Email", "Phone", "Mail"], "required": true },
-    { "type": "rating", "label": "Satisfaction Level", "min": 1, "max": 10, "required": true },
+    { "type": "number", "label": "Satisfaction Level", "min": 1, "max": 10, "required": true },
     { "type": "text", "label": "Favorite Brand", "required": false },
     { "type": "checkbox", "label": "Subscribed to Newsletter", "required": false },
     { "type": "date", "label": "Subscription Date", "required": false },
@@ -19,6 +19,6 @@
     { "type": "textarea", "label": "Additional Feedback", "required": false },
     { "type": "number", "label": "Years at Current Address", "required": false },
     { "type": "dropdown", "label": "Access to Technology", "values": ["Smartphone", "Computer", "Tablet"], "required": false },
-    { "type": "rating", "label": "Tech Savviness", "min": 1, "max": 5, "required": false }
+    { "type": "number", "label": "Tech Savviness", "min": 1, "max": 5, "required": false }
   ]
 }
