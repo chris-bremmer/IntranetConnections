@@ -13,7 +13,7 @@
 	- MudBlazor 8.3.0
 	- Blazored Local Storage 4.5.0
 4. Run the application.
-5. Preview at http://morphiforms.bremmer.ca/
+5. Preview at https://morphiforms.bremmer.ca/
 
 ### Design considerations and architecture decisions
 
@@ -36,7 +36,7 @@
 * **Browser Compatibility:** The application is designed to run in modern web browsers with JavaScript enabled.
 * **Date Handling:** Date fields are handled in the client's local time.
 
-Deployed to http://morphiforms.bremmer.ca/
+Deployed to https://morphiforms.bremmer.ca/
 
 ## Additional Notes
 
