@@ -1,17 +1,69 @@
 {
   "title": "Personal Goals Tracker",
   "fields": [
-    { "type": "text", "label": "Name", "required": true },
-    { "type": "email", "label": "Email", "required": true },
-    { "type": "text", "label": "Primary Goal", "required": true },
-    { "type": "textarea", "label": "Steps to Achieve Goal", "required": true },
-    { "type": "date", "label": "Start Date", "required": true },
-    { "type": "date", "label": "Target Completion Date", "required": true },
-    { "type": "number", "label": "Motivation Level", "min": 1, "max": 5, "required": true },
-    { "type": "checkbox", "label": "Track Progress Weekly", "required": false },
-    { "type": "textarea", "label": "Challenges Faced", "required": false },
-    { "type": "radio", "label": "Preferred Support Type", "values": ["Advice", "Tools", "Accountability"], "required": false },
-    { "type": "text", "label": "Secondary Goal", "required": false },
-    { "type": "dropdown", "label": "Time Dedicated Per Week", "values": ["<1 Hour", "1-3 Hours", "3-5 Hours", "5+ Hours"], "required": false }
+    {
+      "type": "text",
+      "label": "Name",
+      "required": true
+    },
+    {
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "type": "text",
+      "label": "Primary Goal",
+      "required": true
+    },
+    {
+      "type": "textarea",
+      "label": "Steps to Achieve Goal",
+      "required": true
+    },
+    {
+      "type": "date",
+      "label": "Start Date",
+      "required": true
+    },
+    {
+      "type": "date",
+      "label": "Target Completion Date",
+      "required": true
+    },
+    {
+      "type": "number",
+      "label": "Motivation Level",
+      "min": 1,
+      "max": 5,
+      "required": true
+    },
+    {
+      "type": "checkbox",
+      "label": "Track Progress Weekly",
+      "required": false
+    },
+    {
+      "type": "textarea",
+      "label": "Challenges Faced",
+      "required": false
+    },
+    {
+      "type": "radio",
+      "label": "Preferred Support Type",
+      "values": [ "Advice", "Tools", "Accountability" ],
+      "required": false
+    },
+    {
+      "type": "text",
+      "label": "Secondary Goal",
+      "required": false
+    },
+    {
+      "type": "dropdown",
+      "label": "Time Dedicated Per Week",
+      "values": [ "<1 Hour", "1-3 Hours", "3-5 Hours", "5+ Hours" ],
+      "required": false
+    }
   ]
 }

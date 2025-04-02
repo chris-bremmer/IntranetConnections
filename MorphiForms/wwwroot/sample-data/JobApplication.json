@@ -1,10 +1,33 @@
 {
   "title": "Job Application",
   "fields": [
-    { "type": "text", "label": "Full Name", "required": true },
-    { "type": "email", "label": "Email", "required": true },
-    { "type": "number", "label": "Experience (Years)", "min": 0, "max": 50, "required": true },
-    { "type": "dropdown", "label": "Preferred Department", "values": ["HR", "Engineering", "Sales", "Marketing"], "required": true },
-    { "type": "textarea", "label": "Why Should We Hire You?", "required": true }
+    {
+      "type": "text",
+      "label": "Full Name",
+      "required": true
+    },
+    {
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "type": "number",
+      "label": "Experience (Years)",
+      "min": 0,
+      "max": 50,
+      "required": true
+    },
+    {
+      "type": "dropdown",
+      "label": "Preferred Department",
+      "values": [ "HR", "Engineering", "Sales", "Marketing" ],
+      "required": true
+    },
+    {
+      "type": "textarea",
+      "label": "Why Should We Hire You?",
+      "required": true
+    }
   ]
 }
